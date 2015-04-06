@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 底部淡白色 -->
+    <color name="bottom_bar_default_color">#ff4a4a4a</color>
+    <color name="grey_white">#F9F9F9</color>
+
+    <color name="slidebar_ppsgame_black">#000000</color>
+    <color name="slidebar_ppsgame_xine">#ff4a4a4a</color>
+    <color name="slidebar_ppsgame_white">#ffffff</color>
+    <color name="slidebar_ppsgame_customer_bg">#dddddd</color>
+    <color name="slidebar_ppsgame_gray">#888888</color>
+    <color name="slidebar_ppsgame_green">#85c210</color>
+    <color name="slidebar_ppsgame_sdk_line">#d3d3d3</color>
+    <color name="slidebar_ppsgame_payment_qudao_bg">#f0e7dc</color>
+    <color name="slidebar_ppsgame_background">#f7f7f7</color>
+    <color name="slidebar_ppsgame_fragment_background">#F4F4F4</color>
+    <color name="slidebar_tab_text_selected">#FF8A00</color>
+    <color name="slidebar_tab_text_unselected">#373737</color>
+
+    <color name="slidebar_ppsgame_yellow">#ff8a00</color>
+    <color name="slidebar_background_color">#808080</color>
+    <color name="slidebar_button_color">#FEFEFE</color>
+    <color name="slidebar_text_color">#ffffff</color>
+    <color name="slidebar_hint_color">#888888</color>
+    <color name="slidebar_edit_color">#222222</color>
+    <color name="slidebar_menu_item_color">#222222</color>
+    <color name="slidebar_selected_color">#23c6ff</color>
+    <color name="slidebar_unselected_color">#f7f7f7</color>
+
+    <color name="slidebar_red">#FF1014</color>
+    <color name="slidebar_white">#FFFFFF</color>
+    <color name="slidebar_gray">#808080</color>
+    <color name="slidebar_black">#000000</color>
+    <color name="slidebar_problems_content_text_color">#666666</color>
+    <color name="system_yellow">#FFFFFF00</color>
+    <color name="slidebar_account_text">#686868</color>
+    <color name="slidebar_recharge_inquiry_tab_text">#4c4c4c</color>
+    <color name="slidebar_recharge_inquiry_tab_indicator">#ff8a00</color>
+    <color name="slidebar_recharge_inquiry_item_num">#999999</color>
+
+    <!-- LIST BORDER COLOR -->
+    <color name="slidebar_rounded_container_border">#EEE9E9</color>
+
+    <!-- ITEM BACKGROUND COLOR - STATE - DEFAULT -->
+    <color name="slidebar_base_start_color_default">#FFFFFF</color>
+    <color name="slidebar_base_end_color_default">#FFFFFF</color>
+
+    <!-- ITEM BACKGROUND COLOR - STATE - PRESSED -->
+    <color name="slidebar_base_start_color_pressed">#ff3590c4</color>
+    <color name="slidebar_base_end_color_pressed">#ff2570ba</color>
+
+    <!-- ITEM TEXT COLORS - STATES - PRESSED AND DEFAULT -->
+    <color name="slidebar_text_color_default">#000000</color>
+    <color name="slidebar_text_color_pressed">#ffffff</color>
+
+
+
+    <color name="slidebar_blue1">#0938F7</color>
+    <color name="slidebar_ppsgame_pop_back">#55000000</color>
+    <color name="slidebar_ppsgame_pop_green">#999A00</color>
+    <color name="slidebar_wumin_lucky_color">#006699</color>
+    <color name="slidebar_copy_bg">#00A4F2</color>
+
+    <color name="tab_indicator_text_selected">#ef8100</color>
+    <color name="tab_indicator_text_unselected">#000000</color>
+    <color name="page_viewer_margin_color">#ffffff</color>
+
+    <color name="slidebar_half_alpha_black">#99000000</color>
+    <color name="slidebar_month_tab_sel">#2c2c2c</color>
+    <color name="slidebar_transparent">#00000000</color>
+    <color name="slidebar_facebooktop_btn_press_bg">#80778899</color>
+    <color name="slidebar_progress_experience_start">#ff8a00</color>
+    <color name="slidebar_progress_experience_end">#ffbf73</color>
+</resources>

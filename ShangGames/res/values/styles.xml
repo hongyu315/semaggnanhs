@@ -1,0 +1,123 @@
+<resources>
+
+    <!-- Base application theme. -->
+<!--     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:windowBackground">@drawable/ads</item>
+        Customize your theme here.
+    </style> -->
+
+    <style name="AnimationActivity" mce_bogus="1" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/activity_open_enter</item>
+        <item name="android:activityOpenExitAnimation">@anim/activity_open_exit</item>
+        <item name="android:activityCloseEnterAnimation">@anim/activity_close_enter</item>
+        <item name="android:activityCloseExitAnimation">@anim/activity_close_exit</item>
+    </style>
+
+    <!--<style name="AnimationFade">-->
+        <!--<item name="android:windowEnterAnimation">@anim/slide_down</item>-->
+        <!--<item name="android:windowExitAnimation">@anim/slide_up</item>-->
+    <!--</style>-->
+    <!--<style name="mainAnimationFade">-->
+        <!--<item name="android:windowEnterAnimation">@anim/fade_in</item>-->
+        <!--<item name="android:windowExitAnimation">@anim/fade_out</item>-->
+    <!--</style>-->
+
+
+    <style name="startTheme" parent="@android:style/Theme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item><!--无标题-->
+    </style>
+
+    <style name="AnimBottom" parent="@android:style/Animation">
+    <item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
+    <item name="android:windowExitAnimation">@anim/push_bottom_out</item>
+    </style>
+
+    <style name="AnimActivityTheme">
+        <item name="android:windowAnimationStyle">@style/FeelyouWindowAnimTheme</item>
+    </style>
+
+    <style name="FeelyouWindowAnimTheme" parent="@android:style/Theme">
+
+        <!--<item name="android:windowIsTranslucent">false</item>-->
+
+        <!--当我们从 A1 启动 A2 时，A2 出现在屏幕上-->
+        <item name="android:activityOpenEnterAnimation">@anim/push_left_in</item>
+        <!--当我们从 A1 启动 A2 时，A1 从屏幕上消失-->
+        <!--<item name="android:activityOpenExitAnimation">@anim/push_left_out</item>-->
+
+        <!--当我们从 A2 退出回到 A1 时，A2 从屏幕上消失-->
+        <item name="android:activityCloseExitAnimation">@anim/push_left_out</item>
+        <!--当我们从 A2 退出回到 A1 时，A1 出现在屏幕上-->
+        <!--<item name="android:activityCloseEnterAnimation">@anim/push_left_in</item>-->
+
+    </style>
+
+<!--     <style name="BrowserThemeDefault" parent="@android:style/Theme.Black.NoTitleBar">
+        <item name="bookimage">@android:color/white</item>
+        <item name="tvcolor">@android:color/black</item>
+    </style> -->
+
+    <!-- 默认风格 -->
+<!--     <style name="BrowserThemeNight" parent="@android:style/Theme.Black.NoTitleBar">
+        <item name="bookimage">@android:color/black</item>
+        <item name="tvcolor">@android:color/black</item>
+    </style> -->
+
+    <!-- 夜间模式 -->
+    <style name="TitleBar">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">54dip</item>
+        <item name="android:background">#F5F5F5</item>
+    </style>
+
+    <style name="slidebar_WrapContent">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="MatchParent">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="TitleTextView" parent="slidebar_WrapContent">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_centerInParent">true</item>
+    </style>
+
+    <style name="CopyBtnWidthHeight">
+        <item name="android:layout_width">68dp</item>
+        <item name="android:layout_height">30dp</item>
+    </style>
+
+    <style name="ButtonTextStyle" parent="CopyBtnWidthHeight">
+        <item name="android:textColor">#FFF</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:shadowColor">#55000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">1</item>
+    </style>
+
+    <style name="BackBtn" parent="ButtonTextStyle">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:paddingLeft">30dp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:src">@drawable/sliderbar_back_icon</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <style name="BackToGameBtn" parent="ButtonTextStyle">
+        <item name="android:layout_marginRight">8dip</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <!--<item name="android:background">@drawable/sliderbar_back_btn_selector</item>-->
+        <item name="android:text">分享</item>
+    </style>
+
+</resources>

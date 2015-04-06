@@ -1,0 +1,105 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/content_main"
+    android:background="@color/grey_white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/content_layout"
+        android:background="@color/grey_white"
+        style="@style/TitleBar">
+
+        <ImageButton
+            android:id="@+id/content_slidebar_gift_detail_back"
+            style="@style/BackBtn"/>
+
+        <Button
+            android:id="@+id/content_slidebar_gift_detail_back_to_game"
+            style="@style/BackToGameBtn"/>
+
+        <TextView
+            android:id="@+id/content_title"
+            style="@style/TitleTextView"
+            android:layout_toLeftOf="@+id/content_slidebar_gift_detail_back_to_game"
+            android:layout_toRightOf="@+id/content_slidebar_gift_detail_back"
+            android:gravity="center"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/slidebar_gray" />
+
+    </RelativeLayout>
+
+    <com.shang.games.Views.BaseWebView
+        android:layout_below="@+id/content_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/content_webView"
+        android:scrollbars="none"/>
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/content_imageView"
+        android:src="@drawable/ads"
+        android:visibility="gone"
+        android:scaleType="fitXY"
+        />
+
+    <ProgressBar
+        android:id="@+id/content_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminateDrawable="@drawable/frame_loading" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/content_textView"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <RelativeLayout
+        android:id="@+id/content_bottom_layout"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        android:background="@color/bottom_bar_default_color"
+        style="@style/TitleBar">
+
+        <ImageButton
+            android:id="@+id/content_webview_back"
+            android:background="@drawable/back_icon"
+            android:layout_centerVertical="true"
+            android:layout_width="@dimen/bottom_bar_icon_size"
+            android:layout_height="@dimen/bottom_bar_icon_size"/>
+
+        <ImageButton
+            android:id="@+id/content_webview_forword"
+            android:layout_centerVertical="true"
+            android:layout_width="@dimen/bottom_bar_icon_size"
+            android:layout_height="@dimen/bottom_bar_icon_size"
+            android:background="@drawable/next_icon"
+            android:layout_toRightOf="@+id/content_webview_back" />
+
+        <Button
+            android:id="@+id/content_webview_refresh_btn"
+            android:layout_width="@dimen/bottom_bar_icon_size"
+            android:layout_height="@dimen/bottom_bar_icon_size"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/refresh"/>
+
+        <Button
+            android:id="@+id/content_webview_setting_btn"
+            android:layout_toLeftOf="@+id/content_webview_refresh_btn"
+            android:background="@drawable/setting"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_width="@dimen/bottom_bar_icon_size"
+            android:layout_height="@dimen/bottom_bar_icon_size"/>
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">尚手网</string>
+
+    <!-- app 首页显示的网页地址 -->
+    <!--<string name="home_url">http://m.baidu.com</string>-->
+    <string name="home_url">http://shanggames.com/news_list.php</string>
+
+    <!--是否显示顶部标题栏 true 代表显示 、 false 或者 不填 代表不显示-->
+    <string name="isNeedShowTitleBar">false</string>
+
+    <!--是否显示底部标题栏 true 代表显示 、 false 或者 不填 代表不显示-->
+    <string name="isNeedShowBottomBar">false</string>
+
+    <!--是否显示广告界面 true 代表显示 、 false 或者 不填 代表不显示-->
+    <string name="isNeedShowAD">true</string>
+
+    <!-- 公司网址 -->
+    <string name="logo_url">http://www.shanggames.com/</string>
+
+    <!-- 分享标题 -->
+    <string name="share_title">分享</string>
+
+    <!-- 分享内容 -->
+    <string name="share_content">分享</string>
+
+
+    <string name="night_mode">夜间模式</string>
+    <string name="adjust_bright">调节亮度</string>
+    <string name="text_size">字体大小</string>
+    <string name="done">完成</string>
+    <string name="title_activity_splash">SplashActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_content">ContentActivity</string>
+
+    <string name="exit">退出</string>
+    <string name="exit_msg">确定退出尚手网？</string>
+    <string name="confirm">退出</string>
+    <string name="min">最小化</string>
+    <string name="cancal">取消</string>
+
+</resources>
