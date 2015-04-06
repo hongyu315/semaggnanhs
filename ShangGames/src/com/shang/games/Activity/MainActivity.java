@@ -295,12 +295,7 @@ public class MainActivity extends Activity {
 				LogUtil.e("progrss = " + progress);
 				if (progress == 100) {
 					mProgressBar.setVisibility(View.GONE);
-					// mTextView.setVisibility(View.GONE);
-				} else {
-					// mProgressBar.setVisibility(View.VISIBLE);
-					// mTextView.setText("Loading..." + progress + "%");
-					// mTextView.setVisibility(View.VISIBLE);
-				}
+				} 
 			}
 		});
 
