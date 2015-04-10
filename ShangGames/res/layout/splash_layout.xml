@@ -40,6 +40,7 @@
             android:layout_gravity="center_vertical"
             android:clickable="true"
             android:padding="15.0dip"
+            android:visibility="gone"
             android:src="@drawable/dot" />
 
         <ImageView

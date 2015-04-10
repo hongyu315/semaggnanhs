@@ -20,7 +20,9 @@ import android.widget.LinearLayout;
 import com.shang.games.R;
 import com.shang.games.Data.Globle;
 import com.shang.games.Data.ViewPagerAdapter;
+import com.shang.games.Utils.LogUtil;
 import com.shang.games.Utils.PrefUtil;
+import com.shang.games.Utils.Utils;
 
 public class SplashActivity extends Activity implements OnClickListener,
 		OnPageChangeListener {
@@ -32,7 +34,7 @@ public class SplashActivity extends Activity implements OnClickListener,
 
 	// 引导图片资源
 	private static final int[] pics = { R.drawable.welcome1,
-			R.drawable.welcome2, R.drawable.welcome3 };
+			R.drawable.welcome2 };
 
 	// 底部小店图片
 	private ImageView[] dots;
@@ -50,30 +52,31 @@ public class SplashActivity extends Activity implements OnClickListener,
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);// 全屏
 		prefUtil = new PrefUtil(this);
-
-		if (!prefUtil.getBoolean(PrefUtil.isFirstLaunch, false)) {
+		
+		int versionCode = Utils.getVersionCode(this);
+		int prefVersionCode = prefUtil.getInt(PrefUtil.VersionCode, 0);
+		
+		if (!prefUtil.getBoolean(PrefUtil.isFirstLaunch, false) || (versionCode > prefVersionCode)) {
 			prefUtil.saveBoolean(PrefUtil.isFirstLaunch, true);
+			prefUtil.saveInt(PrefUtil.VersionCode, versionCode);
+			
 			setContentView(R.layout.splash_layout);
 
 			views = new ArrayList<View>();
 
-			LinearLayout.LayoutParams mParams = new LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.WRAP_CONTENT,
-					LinearLayout.LayoutParams.WRAP_CONTENT);
-
 			LayoutInflater inflater = getLayoutInflater();
 
-			View view3 = inflater.inflate(R.layout.guide3, null);
+			View view2 = inflater.inflate(R.layout.guide2, null);
 			// 初始化引导图片列表
 			views.add(inflater.inflate(R.layout.guide1, null));
-			views.add(inflater.inflate(R.layout.guide2, null));
-			views.add(view3);
+			views.add(view2);
 
-			view3.findViewById(R.id.welcome_btn).setOnClickListener(
+			view2.findViewById(R.id.welcome_btn).setOnClickListener(
 					new OnClickListener() {
 						@SuppressLint("NewApi")
 						@Override
 						public void onClick(View v) {
+							LogUtil.e("on butn click");
 							startActivity(new Intent(SplashActivity.this,
 									MainActivity.class));
 							overridePendingTransition(R.anim.push_left_in,

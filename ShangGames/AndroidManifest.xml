@@ -19,7 +19,7 @@
     <application
         android:allowBackup="false"
         android:icon="@drawable/ic_launcher"
-        android:theme="@style/AnimationActivity"
+        android:theme="@style/ThemeActivity"
         android:label="@string/app_name" >
          <activity
             android:name="com.shang.games.Activity.SplashActivity"

@@ -17,6 +17,7 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -51,6 +52,9 @@ public class MainActivity extends Activity {
 	 */
 	RelativeLayout titleLayout;
 	WebView mWebView;
+	/**
+	 * 广告界面 404界面
+	 */
 	ImageView mImageView;
 	TextView mTextView;
 	TextView mTitle;
@@ -143,6 +147,18 @@ public class MainActivity extends Activity {
 		bottomLayout = (RelativeLayout) findViewById(R.id.bottom_layout);
 		mProgressBar = (ProgressBar) findViewById(R.id.main_progress);
 		// mainLayout = (RelativeLayout) findViewById(R.id.main_layout);
+
+		mImageView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (Utils.isOnline(MainActivity.this)) {
+					mWebView.reload();
+				}else{
+					mProgressBar.setVisibility(View.VISIBLE);
+					mTextView.setVisibility(View.GONE);
+				}
+			}
+		});
 
 		String isNeedShowTitleBar = getResources().getString(
 				R.string.isNeedShowTitleBar);
@@ -295,7 +311,10 @@ public class MainActivity extends Activity {
 				LogUtil.e("progrss = " + progress);
 				if (progress == 100) {
 					mProgressBar.setVisibility(View.GONE);
-				} 
+					view.setVisibility(View.VISIBLE);
+				}else{
+					view.setVisibility(View.GONE);
+				}
 			}
 		});
 
@@ -371,10 +390,20 @@ public class MainActivity extends Activity {
 	onWebviewLoadFinish onLoadFinish = new onWebviewLoadFinish() {
 		@Override
 		public void isPass(boolean isPass) {
-			if (isPass) {
-			} else {
-				mTextView.setText("加载失败");
-				mTextView.setVisibility(View.VISIBLE);
+			LogUtil.e("444 is pass = " + isPass);
+			if (time <= 0) {
+				if (isPass) {
+					mWebView.setVisibility(View.VISIBLE);
+					mImageView.setVisibility(View.GONE);
+				} else {
+					LogUtil.e("laod fail");
+					mProgressBar.setVisibility(View.GONE);
+					mWebView.setVisibility(View.GONE);
+					mImageView.setImageResource(R.drawable.load_fail);
+					mImageView.setVisibility(View.VISIBLE);
+					// mTextView.setText("加载失败");
+					// mTextView.setVisibility(View.VISIBLE);
+				}
 			}
 		}
 
@@ -447,19 +476,31 @@ public class MainActivity extends Activity {
 					// mTextView.setText("广告即将消失在 " + time + " 秒后");
 					handler.sendEmptyMessageDelayed(0, 1000);
 				} else {
+					getWindow().clearFlags(
+							WindowManager.LayoutParams.FLAG_FULLSCREEN);
 					if (mProgress != 100)
 						mProgressBar.setVisibility(View.VISIBLE);
-					TranslateAnimation mHiddenAction = new TranslateAnimation(
-							Animation.RELATIVE_TO_SELF, 0.0f,
-							Animation.RELATIVE_TO_SELF, 100.0f,
-							Animation.RELATIVE_TO_SELF, 0.0f,
-							Animation.RELATIVE_TO_SELF, 0.0f);
-					mHiddenAction.setDuration(5000);
-					mImageView.setAnimation(mHiddenAction);
-					mTextView.setVisibility(View.GONE);
-					mImageView.setVisibility(View.GONE);
-					
-					getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+					// 如果有网络
+					if (Utils.isOnline(MainActivity.this)) {
+						TranslateAnimation mHiddenAction = new TranslateAnimation(
+								Animation.RELATIVE_TO_SELF, 0.0f,
+								Animation.RELATIVE_TO_SELF, 100.0f,
+								Animation.RELATIVE_TO_SELF, 0.0f,
+								Animation.RELATIVE_TO_SELF, 0.0f);
+
+						mHiddenAction.setDuration(1000);
+						mImageView.setAnimation(mHiddenAction);
+						mTextView.setVisibility(View.GONE);
+						mImageView.setVisibility(View.GONE);
+						mImageView.setOnClickListener(null);
+					} else {
+						mWebView.setVisibility(View.GONE);
+						// mTextView.setVisibility(View.VISIBLE);
+						// mTextView.setText("网络连接不可用，请稍后重试");
+						mImageView.setImageResource(R.drawable.load_fail);
+						mImageView.setVisibility(View.VISIBLE);
+					}
 				}
 			}
 		}

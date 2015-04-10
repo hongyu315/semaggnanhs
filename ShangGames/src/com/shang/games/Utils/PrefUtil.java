@@ -16,6 +16,8 @@ public class PrefUtil {
 
     public static final String TextSizePref = "TextSize";
     public static final String BrightPref = "Bright";
+    
+    public static final String VersionCode = "VersionCode";
 
     
 

@@ -59,6 +59,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/content_textView"
+        android:visibility="gone"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 

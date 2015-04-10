@@ -2,23 +2,6 @@ package com.shang.games.Activity;
 
 import java.util.Timer;
 
-import com.shang.games.R;
-import com.shang.games.Data.Globle;
-import com.shang.games.Data.MyWebViewClient;
-import com.shang.games.Interface.JSFinish;
-import com.shang.games.Interface.PPSSlidebarShare;
-import com.shang.games.Interface.onWebviewLoadFinish;
-import com.shang.games.R.id;
-import com.shang.games.R.layout;
-import com.shang.games.R.string;
-import com.shang.games.Utils.BrightUtils;
-import com.shang.games.Utils.PrefUtil;
-import com.shang.games.Utils.Utils;
-import com.shang.games.Views.BaseWebView;
-import com.shang.games.Views.SegmentBar;
-import com.shang.games.Views.SettingPopWindow;
-import com.shang.games.Views.SegmentBar.OnSegmentBarChangedListener;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -28,6 +11,7 @@ import android.os.Message;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -38,6 +22,19 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import com.shang.games.R;
+import com.shang.games.Data.Globle;
+import com.shang.games.Data.MyWebViewClient;
+import com.shang.games.Interface.JSFinish;
+import com.shang.games.Interface.PPSSlidebarShare;
+import com.shang.games.Interface.onWebviewLoadFinish;
+import com.shang.games.Utils.BrightUtils;
+import com.shang.games.Utils.PrefUtil;
+import com.shang.games.Utils.Utils;
+import com.shang.games.Views.BaseWebView;
+import com.shang.games.Views.SegmentBar;
+import com.shang.games.Views.SettingPopWindow;
 
 public class ContentActivity extends Activity {
     /**
@@ -122,6 +119,17 @@ public class ContentActivity extends Activity {
         mTitle = (TextView) findViewById(R.id.content_title);
         bottomLayout = (RelativeLayout) findViewById(R.id.content_bottom_layout);
         mProgressBar = (ProgressBar) findViewById(R.id.content_progress);
+        
+        mImageView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mProgressBar.setVisibility(View.VISIBLE);
+				mTextView.setVisibility(View.GONE);
+				if (Utils.isOnline(ContentActivity.this)) {
+					mWebView.reload();
+				}
+			}
+		});
 
         String isNeedShowTitleBar = getResources().getString(R.string.isNeedShowTitleBar);
         titleLayout.setVisibility(isNeedShowTitleBar.equals("true") ? View.VISIBLE : View.GONE);
@@ -265,9 +273,12 @@ public class ContentActivity extends Activity {
         @Override
         public void isPass(boolean isPass) {
             if (isPass) {
-                mTextView.setVisibility(View.GONE);
+            	mImageView.setVisibility(View.GONE);
+//                mTextView.setVisibility(View.GONE);
             } else {
-                mTextView.setVisibility(View.VISIBLE);
+            	mImageView.setImageResource(R.drawable.load_fail);
+            	mImageView.setVisibility(View.VISIBLE);
+//                mTextView.setVisibility(View.VISIBLE);
             }
         }
 

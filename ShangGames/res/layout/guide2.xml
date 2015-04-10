@@ -7,5 +7,18 @@
         android:gravity="center"
         android:background="@drawable/welcome2" >
     </ImageView>
+    
+        <Button
+        android:id="@+id/welcome_btn"
+        android:background="@drawable/welcome_btn_sel"
+        android:layout_width="100dp"
+        android:text="马上体验"
+        android:textColor="#DDDDDD"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="60dp" />
 
 </RelativeLayout>
