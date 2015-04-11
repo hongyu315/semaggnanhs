@@ -4,6 +4,9 @@ import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -45,6 +48,9 @@ import com.shang.games.Utils.PrefUtil;
 import com.shang.games.Utils.Utils;
 import com.shang.games.Views.SegmentBar;
 import com.shang.games.Views.SettingPopWindow;
+import com.shang.games.http.AsyncHttpClient;
+import com.shang.games.http.JsonHttpResponseHandler;
+import com.shang.games.http.RequestParams;
 
 public class MainActivity extends Activity {
 	/**
@@ -77,7 +83,7 @@ public class MainActivity extends Activity {
 	/**
 	 * 60秒倒计时 模拟软件升级
 	 */
-	int recLen = 600;
+	int recLen = 0;
 	/**
 	 * 计时器
 	 */
@@ -126,7 +132,8 @@ public class MainActivity extends Activity {
 			mImageView.setVisibility(View.GONE);
 		}
 
-		// randomUpdate();
+//		checkUpdate();
+		 randomUpdate();
 	}
 
 	@Override
@@ -424,40 +431,103 @@ public class MainActivity extends Activity {
 	// === function ====
 
 	private void randomUpdate() {
-		timer.schedule(task, 1000, 1000);
+//		timer.schedule(task, 5000);
+		timer.schedule(task, 5000, 1000);
 	}
 
 	TimerTask task = new TimerTask() {
 		@Override
 		public void run() {
-
-			runOnUiThread(new Runnable() { // UI thread
-				@Override
-				public void run() {
-					recLen--;
-					if (recLen < 0) {
-						AlertDialog.Builder dialog = new AlertDialog.Builder(
-								MainActivity.this);
-						dialog.setTitle("更新");
-						dialog.setMessage("后台检测有新版本可以更新，是否现在更新？");
-						dialog.setNegativeButton("稍后更新", null);
-						dialog.setPositiveButton("现在更新",
-								new DialogInterface.OnClickListener() {
-									@Override
-									public void onClick(DialogInterface dialog,
-											int which) {
-										Utils.startDownload(
-												MainActivity.this,
-												"http://222.73.3.43/sqdd.myapp.com/myapp/qqteam/AndroidQQ/Android_QQ.apk?mkey=55021f0afd0cc590&f=d410&p=.apk");
-									}
-								});
-						dialog.show();
+			LogUtil.e("run");
+			checkUpdate();
+//			runOnUiThread(new Runnable() { // UI thread
+//				@Override
+//				public void run() {
+//					recLen--;
+//					if (recLen < 0) {
+//						AlertDialog.Builder dialog = new AlertDialog.Builder(
+//								MainActivity.this);
+//						dialog.setTitle("更新");
+//						dialog.setMessage("后台检测有新版本可以更新，是否现在更新？");
+//						dialog.setNegativeButton("稍后更新", null);
+//						dialog.setPositiveButton("现在更新",
+//								new DialogInterface.OnClickListener() {
+//									@Override
+//									public void onClick(DialogInterface dialog,
+//											int which) {
+//										Utils.startDownload(
+//												MainActivity.this,
+//												"http://222.73.3.43/sqdd.myapp.com/myapp/qqteam/AndroidQQ/Android_QQ.apk?mkey=55021f0afd0cc590&f=d410&p=.apk");
+//									}
+//								});
+//						dialog.show();
 						timer.cancel();
-					}
-				}
-			});
+//					}
+//				}
+//			});
 		}
 	};
+	
+	private void checkUpdate(){
+		LogUtil.e("update");
+		AsyncHttpClient client = new AsyncHttpClient();
+		RequestParams params = new RequestParams(); // 绑定参数
+		String url = "http://update.shanggames.com/update.json";
+		client.get(url, params, new JsonHttpResponseHandler() {
+			@Override
+			public void onSuccess(JSONObject arg0) {
+				LogUtil.e("onSuccess" + arg0.toString());
+
+				String isNeedUpdate;//: "true",
+				String versionCode;//: "2.0",
+				final String updateUrl;//: "http://update.shanggames.com/ver2.apk"
+				
+				try {
+					JSONObject json = new JSONObject(arg0.toString());
+					isNeedUpdate = json.getString("isNeedUpdate");
+					versionCode = json.getString("versionCode");
+					updateUrl = json.getString("updateUrl");
+					
+					if (isNeedUpdate.equalsIgnoreCase("true")) {
+						if(Float.valueOf(versionCode) > Utils.getVersionCode(MainActivity.this)){
+							
+							runOnUiThread(new Runnable() {
+								@Override
+								public void run() {
+									AlertDialog.Builder dialog = new AlertDialog.Builder(
+											MainActivity.this);
+									dialog.setTitle("更新");
+									dialog.setMessage("后台检测有新版本可以更新，是否现在更新？");
+									dialog.setNegativeButton("稍后更新", null);
+									dialog.setPositiveButton("现在更新",
+											new DialogInterface.OnClickListener() {
+												@Override
+												public void onClick(DialogInterface dialog,
+														int which) {
+													Utils.startDownload(
+															MainActivity.this,
+															updateUrl);
+												}
+											});
+									dialog.show();
+								}
+							});
+							
+						}
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			@Override
+			public void onFailure(Throwable error) {
+				super.onFailure(error);
+				LogUtil.e("on fail");
+			}
+		});
+		
+	}
 
 	class mHandler extends Handler {
 
