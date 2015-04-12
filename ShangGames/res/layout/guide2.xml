@@ -17,7 +17,6 @@
         android:layout_marginBottom="60dp"
         android:background="@drawable/welcome_btn_sel"
         android:gravity="center"
-        android:text="开		始"
         android:textColor="#DDDDDD"
         android:textSize="20sp" />
 
