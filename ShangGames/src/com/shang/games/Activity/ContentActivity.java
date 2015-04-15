@@ -38,7 +38,7 @@ import com.shang.games.Views.SettingPopWindow;
 
 public class ContentActivity extends Activity {
 	
-    /**vmaster
+    /**v 2.0
      * 顶部标题栏
      */
     RelativeLayout titleLayout;
