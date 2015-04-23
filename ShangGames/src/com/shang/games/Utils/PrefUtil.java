@@ -18,6 +18,8 @@ public class PrefUtil {
     public static final String BrightPref = "Bright";
     
     public static final String VersionCode = "VersionCode";
+    public static final String CacheUrl = "CacheUrl";
+    public static final String Cache = "Cache";
 
     
 

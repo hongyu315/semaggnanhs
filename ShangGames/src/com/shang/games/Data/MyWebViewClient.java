@@ -6,7 +6,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import com.shang.games.Interface.onWebviewLoadFinish;
+import com.shang.games.Utils.GlobelData;
 import com.shang.games.Utils.LogUtil;
+import com.shang.games.Utils.PrefUtil;
 import com.shang.games.Utils.Utils;
 
 import android.content.Context;
@@ -14,6 +16,7 @@ import android.net.http.SslError;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
@@ -104,10 +107,22 @@ public class MyWebViewClient extends WebViewClient {
         }else{
         	onLoadFinish.isPass(true);
         }
-//        LogUtil.e("222");
         view.getSettings().setBlockNetworkImage(false);
+        
+        CookieSyncManager.createInstance(ctx);
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.setAcceptCookie(true);
+        String cookies = CookieManager.getInstance().getCookie(url);
         CookieSyncManager.getInstance().sync();
-        LogUtil.e("on page finish" + url);
+        PrefUtil pref = new PrefUtil(ctx);
+        if (cookies.contains("uinfo=")) {//user authcookie
+        	cookieManager.setCookie(url, cookies);//cookies是在HttpClient中获得的cookie
+        	GlobelData.CacheUrl = url;
+        	pref.saveString(PrefUtil.CacheUrl, url);
+        	pref.saveString(PrefUtil.Cache, cookies);
+//			String cookieStr = cookies.substring(cookies.indexOf("uinfo=") + 6, cookies.length()).split(";")[0];
+		}
+        LogUtil.e("cookies = " + cookies);
     }
 
     @Override

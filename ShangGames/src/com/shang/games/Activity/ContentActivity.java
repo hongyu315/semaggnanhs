@@ -1,10 +1,13 @@
 package com.shang.games.Activity;
 
+import java.io.File;
 import java.util.Timer;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,6 +16,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.webkit.CookieManager;
+import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -22,6 +27,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.shang.games.R;
 import com.shang.games.Data.Globle;
@@ -30,6 +36,10 @@ import com.shang.games.Interface.JSFinish;
 import com.shang.games.Interface.PPSSlidebarShare;
 import com.shang.games.Interface.onWebviewLoadFinish;
 import com.shang.games.Utils.BrightUtils;
+import com.shang.games.Utils.FileUtils;
+import com.shang.games.Utils.GlobelData;
+import com.shang.games.Utils.LocalStorageProvider;
+import com.shang.games.Utils.LogUtil;
 import com.shang.games.Utils.PrefUtil;
 import com.shang.games.Utils.Utils;
 import com.shang.games.Views.BaseWebView;
@@ -83,6 +93,7 @@ public class ContentActivity extends Activity {
      * 等待 旋转
      */
     ProgressBar mProgressBar;
+    public static ValueCallback<Uri> mUploadMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -218,7 +229,7 @@ public class ContentActivity extends Activity {
         webSettings.setUseWideViewPort(true);
 
         webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
-        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);  //设置 缓存模式
+        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);  //设置 缓存模式
         // 开启 DOM storage API 功能
         webSettings.setDomStorageEnabled(true);
         //开启 database storage API 功能
@@ -233,12 +244,32 @@ public class ContentActivity extends Activity {
         webSettings.setAppCacheEnabled(true);
         mWebView.setBackgroundColor(Color.WHITE);
 
+        CookieManager cm = CookieManager.getInstance();
+        
         prefUtil = new PrefUtil(ContentActivity.this);
+        cm.setCookie(prefUtil.getString(PrefUtil.CacheUrl, ""),prefUtil.getString(PrefUtil.Cache, ""));
         Utils.setWebViewSize(prefUtil.getInt(PrefUtil.TextSizePref, 1), webSettings);
 
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         mWebView.setWebViewClient(new MyWebViewClient(this, onLoadFinish));
         mWebView.setWebChromeClient(new WebChromeClient() {
+    		// For Android 3.0+
+    		public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType) {
+    			if (mUploadMessage != null)
+    				return;
+    			mUploadMessage = uploadMsg;
+    			choosePic();
+    		}
+
+    		// For Android < 3.0
+    		public void openFileChooser(ValueCallback<Uri> uploadMsg) {
+    			openFileChooser(uploadMsg, "");
+    		}
+
+    		// For Android > 4.1.1
+    		public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType, String capture) {
+    			openFileChooser(uploadMsg, acceptType);
+    		}
                                         @Override
                                         public void onReceivedTitle(WebView view, String title) {
                                             super.onReceivedTitle(view, title);
@@ -263,6 +294,65 @@ public class ContentActivity extends Activity {
         mWebView.loadUrl(url);
     }
 
+	private void choosePic() {
+		Intent innerIntent = new Intent(Intent.ACTION_GET_CONTENT); // "android.intent.action.GET_CONTENT"
+		String IMAGE_UNSPECIFIED = "image/*";
+		innerIntent.setType(IMAGE_UNSPECIFIED); // 查看类型
+		Intent wrapperIntent = Intent.createChooser(innerIntent, "上传方式选择");
+		if (Build.VERSION.SDK_INT < 19) {
+			startActivityForResult(wrapperIntent, 2);
+		} else {
+			startActivityForResult(wrapperIntent, 3);
+		}
+	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		Uri uri = data == null || resultCode != Activity.RESULT_OK ? null : data.getData();
+		if (uri != null) {
+			String imagePaths = "";
+			try {
+				if (requestCode == 3){
+					imagePaths = FileUtils.getPath(ContentActivity.this, uri); // android
+					LogUtil.e(" < 4.4 path = " + imagePaths);
+					// 4.4
+					// 以下
+				}
+				if (requestCode == 2){
+					imagePaths = LocalStorageProvider.uri2Path(ContentActivity.this, uri); // android
+					LogUtil.e("4.4 path = " + imagePaths);
+					// 4.4
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			File vFile = new File(imagePaths);
+			if (FileUtils.isLarge5M(vFile)) {
+				Toast.makeText(ContentActivity.this, "您所上传的图片容量过大，请将其瘦瘦身吧",
+						Toast.LENGTH_LONG).show();
+			} else {
+				uri = Uri.fromFile(vFile);
+				if (mUploadMessage != null) {
+					mUploadMessage.onReceiveValue(uri);
+					mUploadMessage = null;
+				}
+			}
+		} else {
+			/**
+			 * 加这段代码就是告诉网页，我们什么照片都没有选 如果不加，网页就不知道该干什么，下次再次点击就不会弹出选择照片的界面了
+			 */
+			Intent intent = new Intent();
+			data = intent;
+			File file = new File("");
+			uri = Uri.fromFile(file);
+			if (mUploadMessage != null) {
+				mUploadMessage.onReceiveValue(uri);
+				mUploadMessage = null;
+			}
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+	
     JSFinish mJSFinish = new JSFinish() {
         @Override
         public void onFinish() {

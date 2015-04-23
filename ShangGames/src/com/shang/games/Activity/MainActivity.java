@@ -275,7 +275,7 @@ public class MainActivity extends Activity {
 		webSettings.setJavaScriptEnabled(true);
 		webSettings.setLoadWithOverviewMode(true);
 		webSettings.setUseWideViewPort(true);
-		webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+		webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
 		webSettings.setBlockNetworkImage(true);
 		webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
 		// mWebView.setBackgroundResource(R.drawable.welcome1);
@@ -331,68 +331,68 @@ public class MainActivity extends Activity {
 		mWebView.loadUrl("http://shanggames.com/news_list.php");
 	}
 
-	/**
-	 * 清除WebView缓存
-	 */
-	public void clearWebViewCache() {
-
-		// 清理Webview缓存数据库
-		try {
-			deleteDatabase("webview.db");
-			deleteDatabase("webviewCache.db");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		// WebView 缓存文件
-		File appCacheDir = new File(getFilesDir().getAbsolutePath()
-				+ Globle.APP_CACAHE_DIRNAME);
-		LogUtil.e("appCacheDir path=" + appCacheDir.getAbsolutePath());
-
-		File webviewCacheDir = new File(getCacheDir().getAbsolutePath()
-				+ Globle.APP_CACAHE_DIRNAME);
-		LogUtil.e("webviewCacheDir path=" + webviewCacheDir.getAbsolutePath());
-
-		// 删除webview 缓存目录
-		if (webviewCacheDir.exists()) {
-			LogUtil.e("del webviewCacheDir dir");
-			deleteFile(webviewCacheDir);
-		} else {
-			LogUtil.e("no found 1");
-		}
-
-		// 删除webview 缓存 缓存目录
-		if (appCacheDir.exists()) {
-			LogUtil.e("del app cache dir");
-			deleteFile(appCacheDir);
-		} else {
-			LogUtil.e("no found 2");
-		}
-	}
-
-	/**
-	 * 递归删除 文件/文件夹
-	 *
-	 * @param file
-	 */
-	public void deleteFile(File file) {
-
-		LogUtil.e("delete file path=" + file.getAbsolutePath());
-
-		if (file.exists()) {
-			if (file.isFile()) {
-				file.delete();
-			} else if (file.isDirectory()) {
-				File files[] = file.listFiles();
-				for (int i = 0; i < files.length; i++) {
-					deleteFile(files[i]);
-				}
-			}
-			file.delete();
-		} else {
-			LogUtil.e("delete file no exists " + file.getAbsolutePath());
-		}
-	}
+//	/**
+//	 * 清除WebView缓存
+//	 */
+//	public void clearWebViewCache() {
+//
+//		// 清理Webview缓存数据库
+//		try {
+//			deleteDatabase("webview.db");
+//			deleteDatabase("webviewCache.db");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//
+//		// WebView 缓存文件
+//		File appCacheDir = new File(getFilesDir().getAbsolutePath()
+//				+ Globle.APP_CACAHE_DIRNAME);
+//		LogUtil.e("appCacheDir path=" + appCacheDir.getAbsolutePath());
+//
+//		File webviewCacheDir = new File(getCacheDir().getAbsolutePath()
+//				+ Globle.APP_CACAHE_DIRNAME);
+//		LogUtil.e("webviewCacheDir path=" + webviewCacheDir.getAbsolutePath());
+//
+//		// 删除webview 缓存目录
+//		if (webviewCacheDir.exists()) {
+//			LogUtil.e("del webviewCacheDir dir");
+//			deleteFile(webviewCacheDir);
+//		} else {
+//			LogUtil.e("no found 1");
+//		}
+//
+//		// 删除webview 缓存 缓存目录
+//		if (appCacheDir.exists()) {
+//			LogUtil.e("del app cache dir");
+//			deleteFile(appCacheDir);
+//		} else {
+//			LogUtil.e("no found 2");
+//		}
+//	}
+//
+//	/**
+//	 * 递归删除 文件/文件夹
+//	 *
+//	 * @param file
+//	 */
+//	public void deleteFile(File file) {
+//
+//		LogUtil.e("delete file path=" + file.getAbsolutePath());
+//
+//		if (file.exists()) {
+//			if (file.isFile()) {
+//				file.delete();
+//			} else if (file.isDirectory()) {
+//				File files[] = file.listFiles();
+//				for (int i = 0; i < files.length; i++) {
+//					deleteFile(files[i]);
+//				}
+//			}
+//			file.delete();
+//		} else {
+//			LogUtil.e("delete file no exists " + file.getAbsolutePath());
+//		}
+//	}
 
 	onWebviewLoadFinish onLoadFinish = new onWebviewLoadFinish() {
 		@Override
