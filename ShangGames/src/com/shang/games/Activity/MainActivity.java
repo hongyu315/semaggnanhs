@@ -1,6 +1,5 @@
 package com.shang.games.Activity;
 
-import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 
